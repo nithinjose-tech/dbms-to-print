@@ -1,0 +1,1664 @@
+
+ EXPERIMENT : 2
+
+
+
+
+1)CREATE TABLE Classroom(
+    building varchar(50),
+    room_number int,
+    capacity int,
+    PRIMARY KEY(room_number));
+
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BULDING                                            VARCHAR2(10)
+ ROOMNUMBER                                NOT NULL NUMBER(38)
+ CAPACITY                                           NUMBER(38)
+
+
+CREATE TABLE Department(
+    dept_Name varchar(20),
+    building varchar(50),
+    budjet int,
+    PRIMARY KEY(dept_name));
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_NAME                                 NOT NULL VARCHAR2(100)
+ BUILDING                                           NUMBER(38)
+ BUDGET                                             NUMBER(38)
+
+
+CREATE TABLE Course(
+  course_id varchar(10),
+  title varchar(20),
+  dept_name varchar(20),
+  credits int,
+  PRIMARY KEY(course_id),
+  FOREIGN KEY(dept_Name)
+  REFERENCES Department(dept_Name));
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL NUMBER(38)
+ TITLE                                              VARCHAR2(30)
+ DEPT_NAME                                          VARCHAR2(100)
+ CREDITS                                            NUMBER(38)
+
+
+CREATE TABLE Instructor(
+  id int,
+  name varchar(20),
+  dept_Name varchar(20),
+  salary int,
+  PRIMARY KEY(id),
+  FOREIGN KEY(dept_Name)
+  REFERENCES Department(dept_Name));
+
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(10)
+ DEPT_NAME                                          VARCHAR2(100)
+ SALARY                                             NUMBER(38)
+
+
+CREATE TABLE Student(
+  id int,
+  name varchar(20),
+  dept_Name varchar(20),
+  tot_cred int,
+  PRIMARY KEY(id),
+  FOREIGN KEY(dept_Name)
+  REFERENCES Department(dept_Name));
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(10)
+ DEPT_NAME                                          VARCHAR2(100)
+ TOT_CREDITS                                        NUMBER(38)
+
+
+
+CREATE TABLE Section(
+  couse_id varchar(10),
+  sec_id int,
+  semester varchar(10),
+  year int,
+  building varchar(50),
+  room_number int,
+  PRIMARY KEY(sec_id),
+  FOREIGN KEY(couse_id)
+  REFERENCES Course(course_id));
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COUSE_ID                                           VARCHAR2(10)
+ SEC_ID                                    NOT NULL NUMBER(38)
+ SEMESTER                                           VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+ BUILDING                                           VARCHAR2(50)
+ ROOM_NUMBER                                        NUMBER(38)
+
+
+CREATE TABLE Teaches(
+  id int,
+  couse_id varchar(10),
+  sec_id int,
+  semester varchar(10),
+  year int,
+  PRIMARY KEY(id),
+  FOREIGN KEY(couse_id)
+  REFERENCES Course(course_id),
+  FOREIGN KEY(sec_id)
+  REFERENCES Section(sec_id));
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ COURSE_ID                                          NUMBER(38)
+ SEC_ID                                             NUMBER(38)
+ SEM                                                NUMBER(38)
+ YEAR                                               NUMBER(38)
+
+
+
+
+
+
+CREATE TABLE Takes(
+  id int,
+  couse_id varchar(10),
+  sec_id int,
+  semester varchar(10),
+  year int,
+  grade char(5),
+  PRIMARY KEY(id),
+  FOREIGN KEY(couse_id)
+  REFERENCES Course(course_id),
+  FOREIGN KEY(sec_id)
+  REFERENCES Section(sec_id));
+  
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ COUSE_ID                                           VARCHAR2(10)
+ SEC_ID                                             NUMBER(38)
+ SEMESTER                                           VARCHAR2(10)
+ YEAR                                               NUMBER(38)
+ GRADE                                              CHAR(5)
+
+
+2)
+a) ALTER TABLE Course
+   MODIFY course_id varchar(10);
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL VARCHAR2(10)
+ TITLE                                              VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ CREDITS                                            NUMBER(38)
+
+b) ALTER TABLE Department
+   ADD dept_no int;
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_NAME                                 NOT NULL VARCHAR2(20)
+ BUILDING                                           VARCHAR2(50)
+ BUDJET                                             NUMBER(38)
+ DEPT_NO                                            NUMBER(38)
+
+c) ALTER TABLE Student
+   MODIFY name varchar(20)
+   NOT NULL;
+
+Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ TOT_CRED                                           NUMBER(38)
+
+
+
+d) ALTER TABLE Classroom
+   modify capacity DEFAULT 50;
+
+Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BUILDING                                           VARCHAR2(50)
+ ROOM_NUMBER                               NOT NULL NUMBER(38)
+ CAPACITY                                           NUMBER(38)
+
+
+
+
+
+f) ALTER TABLE Instructor
+  ADD CONSTRAINT check_instr CHECK(salary>5000);
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ SALARY                                             NUMBER(38)
+
+
+g) ALTER TABLE Student
+   ADD dob Date;
+
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ TOT_CRED                                           NUMBER(38)
+ DOB                                                DATE
+
+
+
+3)a)  ALTER TABLE Course
+      modify course_id varchar(7);
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ COURSE_ID                                 NOT NULL VARCHAR2(7)
+ TITLE                                              VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ CREDITS                                            NUMBER(38)
+
+b) ALTER TABLE Department
+   DROP COLUMN dept_no;
+
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPT_NAME                                 NOT NULL VARCHAR2(20)
+ BUILDING                                           VARCHAR2(50)
+ BUDJET                                             NUMBER(38)
+
+
+c) ALTER TABLE Student
+   modify name varchar(20);
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ TOT_CRED                                           NUMBER(38)
+ DOB                                                DATE
+
+d) ALTER TABLE Classroom
+   modify capacity DEFAULT NULL;
+
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BUILDING                                           VARCHAR2(50)
+ ROOM_NUMBER                               NOT NULL NUMBER(38)
+ CAPACITY                                           NUMBER(38)
+
+
+
+
+
+
+
+
+f) ALTER TABLE Instructor 
+  DROP CONSTRAINT check_instr ;
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ DEPT_NAME                                          VARCHAR2(20)
+ SALARY                                             NUMBER(38)
+
+
+4)
+  RENAME TAKES to Subject
+
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ COURSE_ID                                          NUMBER(38)
+ SEC_ID                                             NUMBER(38)
+ SEM                                                NUMBER(38)
+ YEAR                                               NUMBER(38)
+ GRAD                                               NUMBER(38)
+
+
+      EXPERIMENT : 3
+
+1.
+  INSERT INTO Classroom
+  VALUES('Packard',101,500);
+  INSERT INTO Classroom
+  VALUES('Painter',514,10);
+  INSERT INTO Classroom
+  VALUES('Taylor',3128,70);
+  INSERT INTO Classroom
+  VALUES('Watson',100,30);
+  INSERT INTO Classroom
+  VALUES('Watson',120,50);
+
+  BULDING    ROOMNUMBER   CAPACITY
+ ---------- ---------- ----------
+ Packard           101        500
+ Painter           514         10
+ Taylor           3128         70
+ Watson            100         30
+ Watson            120         50
+
+ 
+
+
+  INSERT INTO Department
+  VALUES('Biology','Watson',90000);
+  INSERT INTO Department
+  VALUES('Comp.Sci','Taylor',100000);
+  INSERT INTO Department
+  VALUES('ElecEng','Taylor',85000);
+  INSERT INTO Department
+  VALUES('Finance','Painter',120000);
+  INSERT INTO Department
+  VALUES('History','Painter',50000);
+  INSERT INTO Department
+  VALUES('Music','Packard',80000);
+  INSERT INTO Department
+  VALUES('Physics','Watson',70000);
+
+
+DEPT_NAME            BUILDING
+-------------------- --------------------------------------------------
+    BUDJET
+----------
+Biology              Watson
+     90000
+
+Comp. Sci.           Taylor
+    100000
+
+Elec. Eng.           Taylor
+     85000
+
+
+DEPT_NAME            BUILDING
+-------------------- --------------------------------------------------
+    BUDJET
+----------
+Finance              Painter
+    120000
+
+History              Painter
+     50000
+
+Music                Packard
+     80000
+
+
+DEPT_NAME            BUILDING
+-------------------- --------------------------------------------------
+    BUDJET
+----------
+Physics              Watson
+
+
+ 
+INSERT INTO COURSE values( 'BIO-101', 'Intro. to Biology ', 'Biology',4);
+INSERT INTO COURSE values( 'BIO-301', 'Genetics ', 'Biology',4);
+INSERT INTO COURSE values( 'BIO-399', 'Computational Bio', 'Biology',3);
+INSERT INTO COURSE values( 'CS-101', 'Intro. to CS', 'Comp. Sci.',4);
+INSERT INTO COURSE values( 'CS-190', 'Game design ', 'Comp. Sci.',4);
+INSERT INTO COURSE values( 'CS-315', 'Robotics', 'Comp. Sci.',3);
+INSERT INTO COURSE values( 'CS-319', 'Image Processing', 'Comp. Sci.',3);
+INSERT INTO COURSE values( 'CS-347', 'Database Concepts', 'Comp. Sci.',3);
+INSERT INTO COURSE values( 'EE-181', 'Intro. to Digital', 'Elec. Eng.',3);
+INSERT INTO COURSE values( 'FIN-201', 'Investment Banking ', 'Finance',3);
+INSERT INTO COURSE values( 'HIS-351', 'World History ', 'History',3);
+INSERT INTO COURSE values( 'MU-199', 'Music Video', 'Music',3);
+INSERT INTO COURSE values( 'PHY-101', 'Physical Principles', 'Physics',4);
+
+
+COURSE_ TITLE                DEPT_NAME               CREDITS
+------- -------------------- -------------------- ----------
+BIO-101 Intro. to Biology    Biology                       4
+BIO-301 Genetics             Biology                       4
+BIO-399 Computational Bio    Biology                       3
+CS-101  Intro. to CS         Comp. Sci.                    4
+CS-190  Game design          Comp. Sci.                    4
+CS-315  Robotics             Comp. Sci.                    3
+CS-319  Image Processing     Comp. Sci.                    3
+CS-347  Database Concepts    Comp. Sci.                    3
+FIN-201 Investment Banking   Finance                       3
+HIS-351 World History        History                       3
+MU-199  Music Video          Music                         3
+
+COURSE_ TITLE                DEPT_NAME               CREDITS
+------- -------------------- -------------------- ----------
+PHY-101 Physical Principles  Physics                       4
+EE-181  Intro. to Digital    Elec. Eng.                    3
+
+
+
+insert into instructor values(10101, 'Srinivasan', 'Comp. Sci.', 65000);
+insert into instructor values(12121, 'Wu', 'Finance', 90000);
+insert into instructor values(15151, 'Mozart', 'Music', 40000);
+insert into instructor values(22222, 'Einstein', 'Physics', 95000);
+insert into instructor values(32343, 'El Said', 'History', 60000);
+insert into instructor values(33456, 'Gold', 'Physics', 87000);
+insert into instructor values(45565, 'Katz', 'Comp. Sci.', 75000);
+insert into instructor values(58583, 'Califieri', 'History', 62000);
+insert into instructor values(76543, 'Singh', 'Finance', 80000);
+insert into instructor values(76766, 'Crick', 'Biology', 72000);
+insert into instructor values(83821, 'Brandt', 'Comp. Sci.', 92000);
+insert into instructor values(98345, 'Kim', 'Elec. Eng.', 80000);
+
+
+
+
+        ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     10101 Srinivasan           Comp. Sci.                65000
+     12121 Wu                   Finance                   90000
+     15151 Mozart               Music                     40000
+     22222 Einstein             Physics                   95000
+     32343 El Said              History                   60000
+     33456 Gold                 Physics                   87000
+     45565 Katz                 Comp. Sci.                75000
+     58583 Califieri            History                   62000
+     76543 Singh                Finance                   80000
+     76766 Crick                Biology                   72000
+     83821 Brandt               Comp. Sci.                92000
+
+        ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     98345 Kim                  Elec. Eng.                80000
+
+
+insert into student values(00128, 'Zhang', 'Comp. Sci.', 102, '06-DEC-2000');
+insert into student values(12345, 'Shanker', 'Comp. Sci.', 32, '01-JAN-2001');
+insert into student values(19991, 'Brandt', 'History', 80, '10-JUN-2002');
+insert into student values(23121, 'Chavez', 'Finance', 110, '25-MAR-2003');
+insert into student values(44553, 'Peltier', 'Physics', 56, '30-APR-2004');
+insert into student values(45678, 'Levy', 'Physics', 46, '27-AUG-1999');
+insert into student values(54321, 'Williams', 'Comp. Sci.', 54, '01-OCT-2006');
+insert into student values(55739, 'Sanchez', 'Music', 38, '07-FEB-1995');
+insert into student values(70557, 'Snow', 'Physics', 0, '08-APR-2008');
+insert into student values(76543, 'Brown', 'Comp. Sci.', 58, '09-MAR-2009');
+insert into student values(76653, 'Aoi', 'Elec. Eng.', 60, '10-MAY-2010');
+insert into student values(98765, 'Bourikas', 'Elec. Eng.', 98, '07-JUN-2011');
+insert into student values(98988, 'Tanaka', 'Biology', 120, '07-JUN-2004');
+
+
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   32 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 Peltier              Physics                      56 30-APR-04
+     45678 Levy                 Physics                      46 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        38 07-FEB-95
+     70557 Snow                 Physics                       0 08-APR-08
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+
+
+
+insert into section values('BIO-101', 1, 'Summer', 2009, 'Painter', 514);
+insert into section values('BIO-301', 2, 'Summer', 2010, 'Painter', 514);
+insert into section values('CS-101', 3, 'Fall', 2009, 'Packard', 101);
+insert into section values('CS-101', 4, 'Spring', 2010, 'Packard', 101);
+insert into section values('CS-190', 5, 'Spring', 2009, 'Taylor', 3128);
+insert into section values('CS-190', 6, 'Spring', 2009, 'Taylor', 3128);
+insert into section values('CS-315', 7, 'Spring', 2010, 'Watson', 120);
+insert into section values('CS-319', 8, 'Spring', 2010, 'Watson', 100);
+insert into section values('CS-319', 9, 'Spring', 2010, 'Taylor', 3128);
+insert into section values('CS-347', 10, 'Fall', 2009, 'Taylor', 3128);
+insert into section values('EE-181', 11, 'Spring', 2009, 'Taylor', 3128);
+insert into section values('FIN-201', 12, 'Spring', 2010, 'Packard', 101);
+insert into section values('HIS-351', 13, 'Spring', 2010, 'Painter', 514);
+insert into section values('MU-199', 14, 'Spring', 2010, 'Packard', 101);
+insert into section values('PHY-101', 15, 'Fall', 2009, 'Watson', 100);
+
+
+COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ----------
+BUILDING                                           ROOM_NUMBER
+-------------------------------------------------- -----------
+BIO-101             1 Summer           2009
+Painter                                                    514
+
+CS-190              2 Spring           2009
+Taylor                                                    3128
+
+CS-101              3 Fall             2009
+Packard                                                    101
+
+
+COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ----------
+BUILDING                                           ROOM_NUMBER
+-------------------------------------------------- -----------
+CS-101              4 Spring           2010
+Packard                                                    101
+
+CS-190              5 Spring           2009
+Taylor                                                    3128
+
+CS-190              6 Spring           2009
+Taylor                                                    3128
+
+
+COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ----------
+BUILDING                                           ROOM_NUMBER
+-------------------------------------------------- -----------
+CS-315              7 Spring           2010
+Watson                                                     120
+
+CS-319              8 Spring           2010
+Watson                                                     100
+
+CS-319              9 Spring           2010
+Taylor                                                    3128
+
+
+COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ----------
+BUILDING                                           ROOM_NUMBER
+-------------------------------------------------- -----------
+CS-347             10 Fall             2009
+Taylor                                                    3128
+
+EE-181             11 Spring           2009
+Taylor                                                    3128
+
+FIN-201            12 Spring           2010
+Packard                                                    101
+
+
+COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ----------
+BUILDING                                           ROOM_NUMBER
+-------------------------------------------------- -----------
+HIS-351            13 Spring           2010
+Painter                                                    514
+
+MU-199             14 Spring           2010
+Packard                                                    101
+
+PHY-101            15 Fall             2009
+Watson                                                     100
+
+
+
+
+insert into teaches values(10101, 'CS-101', 1, 'Fall', 2009);
+insert into teaches values(10102, 'CS-315', 1, 'Spring', 2010);
+insert into teaches values(10103, 'CS-347', 1, 'Fall', 2009);
+insert into teaches values(12124, 'FIN-201', 1, 'Spring', 2010);
+insert into teaches values(15151, 'MU-199', 1, 'Spring', 2010);
+insert into teaches values(22222, 'PHY-101', 1, 'Fall', 2009);
+insert into teaches values(32343, 'HIS-351', 1, 'Spring', 2010);
+insert into teaches values(45565, 'CS-101', 1, 'Spring', 2010);
+insert into teaches values(76766, 'BIO-101', 1, 'Summer', 2009);
+insert into teaches values(76767, 'BIO-301', 1, 'Summer', 2010);
+insert into teaches values(83821, 'CS-190', 1, 'Spring', 2009);
+insert into teaches values(83822, 'CS-190', 2, 'Spring', 2009);
+insert into teaches values(83823, 'CS-319', 2, 'Spring', 2010);
+insert into teaches values(98345, 'EE-181', 1, 'Spring', 2009);
+
+
+
+
+
+
+        ID COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     10101 CS-101              1 Fall             2009
+     10102 CS-315              1 Spring           2010
+     10103 CS-347              1 Fall             2009
+     12124 FIN-201             1 Spring           2010
+     15151 MU-199              1 Spring           2010
+     22222 PHY-101             1 Fall             2009
+     32343 HIS-351             1 Spring           2010
+     45565 CS-101              1 Spring           2010
+     76766 BIO-101             1 Summer           2009
+     76767 BIO-301             1 Summer           2010
+     83821 CS-190              1 Spring           2009
+
+        ID COUSE_ID       SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     83822 CS-190              2 Spring           2009
+     83823 CS-319              2 Spring           2010
+     98345 EE-181              1 Spring           2009
+
+
+insert into subject values(00128, 'CS-101',1,'Fall',2009 ,'A');
+insert into subject values(00129, 'CS-347',1,'Fall',2009,'A-');
+insert into subject values(12345, 'CS-101',1,'Fall',2009,'C');
+insert into subject values(12346, 'CS-190',2,'Spring',2009,'A');
+insert into subject values(12347, 'CS-315',1,'Spring',2010 ,'A');
+insert into subject values(12348, 'CS-347',1,'Fall',2009 ,'A');
+insert into subject values(19991, 'HIS-351',1,'Spring',2010 ,'B');
+insert into subject values(23121, 'FIN-201',1,'Spring',2010 ,'C+');
+insert into subject values(44553, 'PHY-101',1,'Fall',2009,'B-');
+insert into subject values(45678, 'CS-101',1,'Fall',2009,'F');
+insert into subject values(45679, 'CS-101',1,'Spring',2010 ,'B+');
+insert into subject values(45688, 'CS-319',1,'Spring',2010 ,'B');
+insert into subject values(54321, 'CS-101',1,'Fall',2009 ,'A-');
+insert into subject values(54322, 'CS-190',2,'Spring',2009 ,'B+');
+insert into subject values(55739, 'MU-199',1,'Spring',2010 ,'A-');
+insert into subject values(76543, 'CS-101',1,'Fall',2009 ,'A');
+insert into subject values(76544, 'CS-319',1,'Spring',2010 ,'A');
+insert into subject values(76653, 'EE-181',1,'Spring',2009 ,'C');
+insert into subject values(98765, 'CS-101',1,'Fall',2009 ,'C-');
+insert into subject values(98766, 'CS-315',1,'Spring',2010 ,'B');
+insert into subject values(98988, 'BIO-101',1,'Summer',2009 ,'A');
+insert into subject values(98989, 'BIO-301',1,'Summer',2010 ,'null');
+
+
+
+
+
+        ID COUSE_ID       SEC_ID SEMESTER         YEAR GRADE
+---------- ---------- ---------- ---------- ---------- -----
+       128 CS-101              1 Fall             2009 A
+       129 CS-347              1 Fall             2009 A-
+     12345 CS-101              1 Fall             2009 C
+     12346 CS-190              2 Spring           2009 A
+     12347 CS-315              1 Spring           2010 A
+     12348 CS-347              1 Fall             2009 A
+     19991 HIS-351             1 Spring           2010 B
+     23121 FIN-201             1 Spring           2010 C+
+     44553 PHY-101             1 Fall             2009 B-
+     45678 CS-101              1 Fall             2009 F
+     45679 CS-101              1 Spring           2010 B+
+
+        ID COUSE_ID       SEC_ID SEMESTER         YEAR GRADE
+---------- ---------- ---------- ---------- ---------- -----
+     45688 CS-319              1 Spring           2010 B
+     54321 CS-101              1 Fall             2009 A-
+     54322 CS-190              2 Spring           2009 B+
+     55739 MU-199              1 Spring           2010 A-
+     76543 CS-101              1 Fall             2009 A
+     76544 CS-319              1 Spring           2010 A
+     76653 EE-181              1 Spring           2009 C
+     98765 CS-101              1 Fall             2009 C-
+     98766 CS-315              1 Spring           2010 B
+     98988 BIO-101             1 Summer           2009 A
+     98989 BIO-301             1 Summer           2010 null
+
+
+
+
+ UPDATE STUDENT 
+ SET name='Mozart'
+ WHERE ID=45678;
+
+ 
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   32 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 Peltier              Physics                      56 30-APR-04
+     45678 Mozart               Physics                      46 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        38 07-FEB-95
+     70557 Snow                 Physics                       0 08-APR-08
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+
+ UPDATE Department
+ SET building='Taylor',budget=100000
+ WHERE dept_name='History';
+
+
+ DEPT_NAME            BUILDING
+-------------------- --------------------------------------------------
+    BUDGET
+----------
+Biology              Watson
+     90000
+
+Comp. Sci.           Taylor
+    100000
+
+Elec. Eng.           Taylor
+     85000
+
+
+DEPT_NAME            BUILDING
+-------------------- --------------------------------------------------
+    BUDGET
+----------
+Finance              Painter
+    120000
+
+History              Taylor
+    100000
+
+Music                Packard
+     80000
+
+
+DEPT_NAME            BUILDING
+-------------------- --------------------------------------------------
+    BUDGET
+----------
+Physics              Watson
+
+
+
+   UPDATE Instructor
+   SET salary=1.1*salary
+
+
+
+
+
+        ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     10101 Srinivasan           Comp. Sci.                71500
+     12121 Wu                   Finance                   99000
+     15151 Mozart               Music                     44000
+     22222 Einstein             Physics                  104500
+     32343 El Said              History                   66000
+     33456 Gold                 Physics                   95700
+     45565 Katz                 Comp. Sci.                82500
+     58583 Califieri            History                   68200
+     76543 Singh                Finance                   88000
+     76766 Crick                Biology                   79200
+     83821 Brandt               Comp. Sci.               101200
+
+        ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     98345 Kim                  Elec. Eng.                88000
+
+
+
+  UPDATE Course 
+  SET credits=4
+  WHERE dept_name='Comp. Sci.';
+
+
+  COURSE_ TITLE                DEPT_NAME               CREDITS
+------- -------------------- -------------------- ----------
+BIO-101 Intro. to Biology    Biology                       4
+BIO-301 Genetics             Biology                       4
+BIO-399 Computational Bio    Biology                       3
+CS-101  Intro. to CS         Comp. Sci.                    4
+CS-190  Game design          Comp. Sci.                    4
+CS-315  Robotics             Comp. Sci.                    4
+CS-319  Image Processing     Comp. Sci.                    4
+CS-347  Database Concepts    Comp. Sci.                    4
+FIN-201 Investment Banking   Finance                       3
+HIS-351 World History        History                       3
+MU-199  Music Video          Music                         3
+
+COURSE_ TITLE                DEPT_NAME               CREDITS
+------- -------------------- -------------------- ----------
+PHY-101 Physical Principles  Physics                       4
+EE-181  Intro. to Digital    Elec. Eng.                    3
+
+
+UPDATE Student 
+SET tot_cred=10+tot_cred
+WHERE tot_cred BETWEEN 20 AND 50;
+
+
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 Peltier              Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     70557 Snow                 Physics                       0 08-APR-08
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN
+
+
+
+  UPDATE Instructor
+  set salary = salary * 1.05 
+  where salary < (select salary from (select avg(salary) salary from Instructor)t);
+
+          ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     10101 Srinivasan           Comp. Sci.                75075
+     12121 Wu                   Finance                   99000
+     15151 Mozart               Music                     46200
+     22222 Einstein             Physics                  104500
+     32343 El Said              History                   69300
+     33456 Gold                 Physics                   95700
+     45565 Katz                 Comp. Sci.                82500
+     58583 Califieri            History                   71610
+     76543 Singh                Finance                   88000
+     76766 Crick                Biology                   83160
+     83821 Brandt               Comp. Sci.               101200
+
+        ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     98345 Kim                  Elec. Eng.                88000
+
+
+   
+  UPDATE Teaches 
+  SET year=2010
+  WHERE course_id='CS-101' AND semester='Fall';
+
+          ID COURSE_ID      SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     10101 CS-101              1 Fall             2010
+     10102 CS-315              1 Spring           2010
+     10103 CS-347              1 Fall             2009
+     12124 FIN-201             1 Spring           2010
+     15151 MU-199              1 Spring           2010
+     22222 PHY-101             1 Fall             2009
+     32343 HIS-351             1 Spring           2010
+     45565 CS-101              1 Spring           2010
+     76766 BIO-101             1 Summer           2009
+     76767 BIO-301             1 Summer           2010
+     83821 CS-190              1 Spring           2009
+
+        ID COURSE_ID      SEC_ID SEMESTER         YEAR
+---------- ---------- ---------- ---------- ----------
+     83822 CS-190              2 Spring           2009
+     83823 CS-319              2 Spring           2010
+     98345 EE-181              1 Spring           2009
+
+   
+    DELETE FROM Student
+    WHERE tot_cred=0;
+
+            ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 Peltier              Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+   DELETE FROM Instructor
+   WHERE ID LIKE '765%';
+
+           ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     10101 Srinivasan           Comp. Sci.                75075
+     12121 Wu                   Finance                   99000
+     15151 Mozart               Music                     46200
+     22222 Einstein             Physics                  104500
+     32343 El Said              History                   69300
+     33456 Gold                 Physics                   95700
+     45565 Katz                 Comp. Sci.                82500
+     58583 Califieri            History                   71610
+     76766 Crick                Biology                   83160
+     83821 Brandt               Comp. Sci.               101200
+     98345 Kim                  Elec. Eng.                88000
+
+
+   DELETE FROM Course
+   WHERE course_id NOT IN
+   (SELECT course_id FROM Section);
+
+  SELECT name,dept_name FROM Instructor;
+
+  NAME                 DEPT_NAME
+-------------------- --------------------
+Srinivasan           Comp. Sci.
+Wu                   Finance
+Mozart               Music
+Einstein             Physics
+El Said              History
+Gold                 Physics
+Katz                 Comp. Sci.
+Califieri            History
+Crick                Biology
+Brandt               Comp. Sci.
+Kim                  Elec. E
+
+ SELECT DISTINCT semester FROM Teaches;
+
+ SEMESTER
+ ----------
+ Spring
+ Summer
+ Fall
+
+
+ SELECT name,salary*1.1 FROM Instructor;
+
+  NAME                 SALARY*1.1
+-------------------- ----------
+Srinivasan              82582.5
+Wu                       108900
+Mozart                    50820
+Einstein                 114950
+El Said                   76230
+Gold                     105270
+Katz                      90750
+Califieri                 78771
+Crick                     91476
+Brandt                   111320
+Kim                       96800
+
+SELECT ID,name FROM Instructor
+WHERE salary>70000 AND dept_name='Comp. Sci.';
+
+        ID NAME
+---------- --------------------
+     10101 Srinivasan
+     45565 Katz
+     83821 Brandt
+
+SELECT i.name ,i.dept_name,d.building
+FROM Instructor i
+INNER JOIN Department d
+ON i.dept_name=d.dept_name;
+
+
+NAME                 DEPT_NAME
+-------------------- --------------------
+BUILDING
+--------------------------------------------------
+Srinivasan           Comp. Sci.
+Taylor
+
+Wu                   Finance
+Painter
+
+Mozart               Music
+Packard
+
+
+NAME                 DEPT_NAME
+-------------------- --------------------
+BUILDING
+--------------------------------------------------
+Einstein             Physics
+Watson
+
+El Said              History
+Taylor
+
+Gold                 Physics
+Watson
+
+
+NAME                 DEPT_NAME
+-------------------- --------------------
+BUILDING
+--------------------------------------------------
+Katz                 Comp. Sci.
+Taylor
+
+Califieri            History
+Taylor
+
+Crick                Biology
+Watson
+
+
+NAME                 DEPT_NAME
+-------------------- --------------------
+BUILDING
+--------------------------------------------------
+Brandt               Comp. Sci.
+Taylor
+
+Kim                  Elec. Eng.
+Taylor
+
+SELECT i.name ,c.course_id
+FROM Instructor i
+JOIN Teaches c
+ON i.ID=c.ID
+WHERE dept_name='Comp.Sci';
+
+    NAME                 COURSE_ID
+ -------------------- ----------
+  Srinivasan           CS-101
+  Katz                 CS-101
+  Brandt               CS-190
+
+SELECT * FROM Course WHERE title LIKE 'Intro%';
+
+ COURSE_ TITLE                DEPT_NAME               CREDITS
+------- -------------------- -------------------- ----------
+BIO-101 Intro. to Biology    Biology                       4
+CS-101  Intro. to CS         Comp. Sci.                    4
+EE-181  Intro. to Digital    Elec. Eng.                    3
+
+SELECT * FROM Course WHERE title LIKE '%Comp%';
+
+COURSE_ TITLE                DEPT_NAME               CREDITS
+------- -------------------- -------------------- ----------
+BIO-399 Computational Bio    Biology                       3
+
+SELECT * FROM Student
+WHERE name LIKE '---';
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+SELECT * FROM Instructor
+WHERE name LIKE '---%';
+
+
+           ID NAME                 DEPT_NAME                SALARY
+---------- -------------------- -------------------- ----------
+     10101 Srinivasan           Comp. Sci.                75075
+     15151 Mozart               Music                     46200
+     22222 Einstein             Physics                  104500
+     32343 El Said              History                   69300
+     33456 Gold                 Physics                   95700
+     45565 Katz                 Comp. Sci.                82500
+     58583 Califieri            History                   71610
+     76766 Crick                Biology                   83160
+     83821 Brandt               Comp. Sci.               101200
+     98345 Kim                  Elec. Eng.                88000
+
+
+
+   UPDATE Student
+   SET name='John'
+   WHERE ID = 44553;
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+
+commit;
+
+
+UPDATE Student
+SET name='Peltier'
+WHERE ID = 44553;
+
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 Peltier              Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+12 rows selected.
+
+ROLLBACK
+
+Rollback complete.
+
+SQL> SELECT * FROM Student;
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+INSERT INTO Student
+VALUES(11111,'Nithin','Biology',150,'2001-06-08');
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     11111 Nithin               Biology                     150 08-MAR-09
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+UPDATE Student SET name='Nithin Jose' WHERE ID=11111;
+
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     11111 Nithin Jose          Biology                     150 08-MAR-09
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+SAVEPOINT nitin_name;
+
+UPDATE Student SET tot_cred=160 WHERE ID=11111;
+
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     11111 Nithin Jose          Biology                     160 08-MAR-09
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+
+SAVEPOINT nitin_cred;
+
+UPDATE Student SET dept_name='Comp.Sci' WHERE ID=11111;
+
+SAVEPOINT nithin_dept;
+
+ROLLBACK TO SAVEPOINT nithin_dept;
+
+ Rollback complete.
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     11111 Nithin Jose          Comp. Sci.                  160 08-MAR-09
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+ROLLBACK TO SAVEPOINT nitin_cred;
+   Rollback complete.
+
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     11111 Nithin Jose          Biology                     160 08-MAR-09
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+ROLLBACK TO SAVEPOINT nitin_name;
+  Rollback complete.
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     11111 Nithin Jose          Biology                     150 08-MAR-09
+       128 Zhang                Comp. Sci.                  102 06-DEC-00
+     12345 Shanker              Comp. Sci.                   42 01-JAN-01
+     19991 Brandt               History                      80 10-JUN-02
+     23121 Chavez               Finance                     110 25-MAR-03
+     44553 John                 Physics                      56 30-APR-04
+     45678 Mozart               Physics                      56 27-AUG-99
+     54321 Williams             Comp. Sci.                   54 01-OCT-06
+     55739 Sanchez              Music                        48 07-FEB-95
+     76543 Brown                Comp. Sci.                   58 09-MAR-09
+     76653 Aoi                  Elec. Eng.                   60 10-MAY-10
+
+        ID NAME                 DEPT_NAME              TOT_CRED DOB
+---------- -------------------- -------------------- ---------- ---------
+     98765 Bourikas             Elec. Eng.                   98 07-JUN-11
+     98988 Tanaka               Biology                     120 07-JUN-04
+
+  
+
+Experiment NO:7
+ 
+ 1)
+    CREATE VIEW Yearwise AS
+    SELECT * FROM section
+    WHERE year=2009;
+
+    
+
+   COURSE_ID      SEC_ID SEMESTER         YEAR BUILDING        ROOM_NUMBER
+---------- ---------- ---------- ---------- --------------- -----------
+BIO-101             1 Summer           2009 Painter                 514
+CS-101              1 Fall             2009 Packard                 101
+CS-190              1 Spring           2009 Taylor                 3128
+CS-190              2 Spring           2009 Taylor                 3128
+CS-347              1 Fall             2009 Taylor                 3128
+EE-181              1 Spring           2009 Taylor                 3128
+PHY-101             1 Fall             2009 Watson                  100
+
+
+2)
+  CREATE VIEW Studentlist AS
+     SELECT * FROM Student
+     ORDER BY name;
+
+         ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     76653 Aoi                  Elec. Eng.                    60 12-MAY-00
+     98765 Bourikas             Elec. Eng.                    98 09-JUN-01
+     19991 Brandt               History                       80 10-JUN-02
+     76543 Brown                Comp. Sci.                    58 12-MAR-99
+     23121 Chavez               Finance                      110 25-MAR-03
+     45678 Mozart               Physics                       56 27-AUG-99
+     44553 Peltier              Physics                       56 03-MAY-94
+     55739 Sanchez              Music                         48 07-FEB-95
+     12345 Shanker              Comp. Sci.                    42 01-JAN-01
+     70557 Snow                 Physics                        0 11-APR-98
+     98988 Tanaka               Biology                      120 11-APR-02
+
+        ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     54321 Williams             Comp. Sci.                    54 03-OCT-96
+       128 Zhang                Comp. Sci.                   102 24-JUL-00
+
+ 3)
+
+    CREATE VIEW Teacher AS
+      SELECT * FROM Teaches
+      where ID NOT IN(select ID FROM Instructor);
+     
+     no rows selected
+
+ 4)
+
+     INSERT INTO Studentlist
+     VALUES(40034,'Aaron','Biology',132,'16-MAR-2001');
+     
+             ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     40034 Aaron                Biology                      132 16-MAR-01
+     76653 Aoi                  Elec. Eng.                    60 12-MAY-00
+     98765 Bourikas             Elec. Eng.                    98 09-JUN-01
+     19991 Brandt               History                       80 10-JUN-02
+     76543 Brown                Comp. Sci.                    58 12-MAR-99
+     23121 Chavez               Finance                      110 25-MAR-03
+     45678 Mozart               Physics                       56 27-AUG-99
+     44553 Peltier              Physics                       56 03-MAY-94
+     55739 Sanchez              Music                         48 07-FEB-95
+     12345 Shanker              Comp. Sci.                    42 01-JAN-01
+     70557 Snow                 Physics                        0 11-APR-98
+
+        ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     98988 Tanaka               Biology                      120 11-APR-02
+     54321 Williams             Comp. Sci.                    54 03-OCT-96
+       128 Zhang                Comp. Sci.                   102 24-JUL-00
+
+ 
+  UPDATE Studentlist set name='Saviour' where ID='40034';
+
+          ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     76653 Aoi                  Elec. Eng.                    60 12-MAY-00
+     98765 Bourikas             Elec. Eng.                    98 09-JUN-01
+     19991 Brandt               History                       80 10-JUN-02
+     76543 Brown                Comp. Sci.                    58 12-MAR-99
+     23121 Chavez               Finance                      110 25-MAR-03
+     45678 Mozart               Physics                       56 27-AUG-99
+     44553 Peltier              Physics                       56 03-MAY-94
+     55739 Sanchez              Music                         48 07-FEB-95
+     40034 Saviour              Biology                      132 16-MAR-01
+     12345 Shanker              Comp. Sci.                    42 01-JAN-01
+     70557 Snow                 Physics                        0 11-APR-98
+
+        ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     98988 Tanaka               Biology                      120 11-APR-02
+     54321 Williams             Comp. Sci.                    54 03-OCT-96
+       128 Zhang                Comp. Sci.                   102 24-JUL-00
+  
+
+
+5.DELETE FROM Studentlist where ID='40034';
+
+         ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     76653 Aoi                  Elec. Eng.                    60 12-MAY-00
+     98765 Bourikas             Elec. Eng.                    98 09-JUN-01
+     19991 Brandt               History                       80 10-JUN-02
+     76543 Brown                Comp. Sci.                    58 12-MAR-99
+     23121 Chavez               Finance                      110 25-MAR-03
+     45678 Mozart               Physics                       56 27-AUG-99
+     44553 Peltier              Physics                       56 03-MAY-94
+     55739 Sanchez              Music                         48 07-FEB-95
+     12345 Shanker              Comp. Sci.                    42 01-JAN-01
+     70557 Snow                 Physics                        0 11-APR-98
+     98988 Tanaka               Biology                      120 11-APR-02
+
+        ID NAME                 DEPT_NAME            TOT_CREDITS DOB
+---------- -------------------- -------------------- ----------- ---------
+     54321 Williams             Comp. Sci.                    54 03-OCT-96
+       128 Zhang                Comp. Sci.                   102 24-JUL-00
+
+
+ 6)
+   DROP VIEW Studentlist;
+   DROP View Teacher;
+   DROP VIEW Yearwise;
+
+   Again trying select operation:
+   table or view does not exist
+
+
+  Experiment No:8
+
+ 1)
+   a)SELECT round(cos(abs(-10))*exp(2)) FROM Dual;
+
+    ROUND(COS(ABS(-10))*EXP(2))
+   ---------------------------
+                         -6
+b)
+  SELECT round(log(10,sqrt(mod(power(5,4),14))),2) FROM Dual;
+
+   ROUND(LOG(10,SQRT(MOD(POWER(5,4),14))),2)
+   -----------------------------------------
+                                      .48
+c)
+   SQL> SELECT sin(30)+tan(60),sign(sin(30)+tan(60)) FROM Dual;
+
+     SIN(30)+TAN(60) SIGN(SIN(30)+TAN(60))
+     --------------- ---------------------
+      -.66799123                    -1
+
+2)
+  select floor(12.9),ceil(12.9) from dual;
+
+FLOOR(12.9) CEIL(12.9)
+----------- ----------
+         12         13
+
+
+3)
+
+ SELECT upper(name),lower(name),initcap(name) from Instructor;
+
+UPPER(NAME)          LOWER(NAME)          INITCAP(NAME)
+-------------------- -------------------- --------------------
+SRINIVASAN           srinivasan           Srinivasan
+WU                   wu                   Wu
+MOZART               mozart               Mozart
+EINSTEIN             einstein             Einstein
+EL SAID              el said              El Said
+GOLD                 gold                 Gold
+KATZ                 katz                 Katz
+CALIFIERI            califieri            Califieri
+SINGH                singh                Singh
+CRICK                crick                Crick
+BRANDT               brandt               Brandt
+
+UPPER(NAME)          LOWER(NAME)          INITCAP(NAME)
+-------------------- -------------------- --------------------
+KIM                  kim                  Kim
+
+  
+
+
+
+4)
+  SELECT replace (c.course_id,'-','/') from course c;
+
+REPLACE(C.
+----------
+BIO/101
+BIO/301
+BIO/399
+CS/101
+CS/190
+CS/315
+CS/319
+CS/347
+EE/181
+FIN/201
+HIS/351
+
+REPLACE(C.
+----------
+MU/199
+PHY/101
+
+
+
+
+5)
+
+    
+SELECT concat(concat(name,' '),dept_name) from Instructor;
+
+CONCAT(CONCAT(NAME,''),DEPT_NAME)
+-----------------------------------------
+Srinivasan Comp. Sci.
+Wu Finance
+Mozart Music
+Einstein Physics
+El Said History
+Gold Physics
+Katz Comp. Sci.
+Califieri History
+Singh Finance
+Crick Biology
+Brandt Comp. Sci.
+
+CONCAT(CONCAT(NAME,''),DEPT_NAME)
+-----------------------------------------
+Kim Elec. Eng.
+
+
+Experiment No:9
+
+1)
+   SELECT sum(SALARY),max(SALARY),min(SALARY),avg(SALARY) FROM Instructor;
+
+SUM(SALARY) MAX(SALARY) MIN(SALARY) AVG(SALARY)
+----------- ----------- ----------- -----------
+     987800      104500       44000  82316.6667
+
+
+ 
+2)
+   SELECT sum(SALARY),max(SALARY),min(SALARY),avg(SALARY) FROM Instructor where dept_name='History';
+
+SUM(SALARY) MAX(SALARY) MIN(SALARY) AVG(SALARY)
+----------- ----------- ----------- -----------
+     134200       68200       66000       67100
+ 
+3)
+
+  SELECT COUNT(*) FROM Instructor;
+
+  COUNT(*)
+----------
+        12
+
+4)
+  SELECT COUNT(*) FROM Instructor where dept_name='Comp. Sci.';
+
+  COUNT(*)
+----------
+         3
+
+
+5)
+   SELECT COUNT (DISTINCT Salary) from Instructor;
+
+   COUNT(DISTINCTSALARY)
+   ---------------------
+                   11
+
+
+  Experiment  NO:10
+
+  1)
+
+
+    SQL> SELECT dept_name,count(*),avg(salary) FROM Instructor
+    GROUP BY dept_name;
+
+DEPT_NAME              COUNT(*) AVG(SALARY)
+-------------------- ---------- -----------
+Elec. Eng.                    1       88000
+Physics                       2      100100
+Comp. Sci.                    3  85066.6667
+Finance                       2       93500
+Biology                       1       79200
+Music                         1       44000
+History                       2       67100
+
+
+2)
+  SELECT course_id,semester,count(*)
+      FROM Subject
+      GROUP BY course_id,semester;
+
+COURSE_ID  SEMESTER     COUNT(*)
+---------- ---------- ----------
+FIN-201    Spring              1
+CS-101     Spring              1
+EE-181     Spring              1
+CS-190     Spring              2
+CS-315     Spring              2
+HIS-351    Spring              1
+CS-347     Fall                2
+CS-319     Spring              2
+BIO-301    Summer              1
+PHY-101    Fall                1
+CS-101     Fall                6
+
+COURSE_ID  SEMESTER     COUNT(*)
+---------- ---------- ----------
+BIO-101    Summer              1
+MU-199     Spring              1
+   
+
+3)
+
+    
+SELECT course_id,semester,count(*)
+     FROM Subject
+     GROUP BY course_id,semester
+     HAVING count(*)>2;
+
+COURSE_ID  SEMESTER     COUNT(*)
+---------- ---------- ----------
+CS-101     Fall                6
+
+
+
+4)
+ SELECT course_id,I.name,COUNT(T.ID)
+  2  FROM Teaches T JOIN Instructor I on
+  3  T.ID=I.ID GROUP BY course_id,name;
+
+COURSE_ID  NAME                 COUNT(T.ID)
+---------- -------------------- -----------
+CS-315     Srinivasan                     1
+BIO-301    Crick                          1
+CS-101     Katz                           1
+CS-347     Srinivasan                     1
+FIN-201    Wu                             1
+PHY-101    Einstein                       1
+EE-181     Kim                            1
+BIO-101    Crick                          1
+CS-101     Srinivasan                     1
+MU-199     Mozart                         1
+HIS-351    El Said                        1
+
+COURSE_ID  NAME                 COUNT(T.ID)
+---------- -------------------- -----------
+CS-190     Brandt                         2
+CS-319     Brandt                         1
+
+5)
+   SELECT dept_name,count(*)
+     FROM Instructor NATURAL JOIN Department
+      WHERE Salary>80000
+      GROUP BY dept_name
+      HAVING count(*)>=2;
+
+DEPT_NAME              COUNT(*)
+-------------------- ----------
+Physics                       2
+Comp. Sci.                    2
+
+   
+  
